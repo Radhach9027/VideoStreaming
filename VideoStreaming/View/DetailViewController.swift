@@ -46,7 +46,7 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         //******** Default player ********//
         // _ = AVPlayerController(url: model.url, controller: self)
         
@@ -58,8 +58,12 @@ class DetailViewController: UIViewController {
     }
 
     private func startStreaming() {
-        guard let thumbNail = model else { return }
+        setViewObjects(model: model)
         playButtonTapped(play_pause)
+    }
+    
+    private func setViewObjects(model: ThumbNailModel?) {
+        guard let thumbNail = model else { return }
         descriptionLabel.text = thumbNail.description
         title = thumbNail.title
     }
@@ -67,11 +71,11 @@ class DetailViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         if UIDevice.current.orientation.isLandscape {
-            navigationController?.isNavigationBarHidden = true
-            playerView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        } else {
-            navigationController?.isNavigationBarHidden = false
+          navigationController?.isNavigationBarHidden = true
+            playerView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height + 60)
+        }else{
             resizeView(min: true)
+            navigationController?.isNavigationBarHidden = false
         }
         viewModel?.resizeFill(playerView: playerView)
     }
@@ -90,8 +94,8 @@ class DetailViewController: UIViewController {
     private func showIndicator(show: Bool) {
         DispatchQueue.main.async {
             if show {
-                self.activityIndicator.startAnimating()
                 self.activityIndicator.isHidden = false
+                self.activityIndicator.startAnimating()
             } else {
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.isHidden = true
@@ -172,8 +176,8 @@ extension DetailViewController: DetailViewModelDelegate {
         seekBar.minimumValue = 0
         seekBar.maximumValue = max.isNaN ? 0 : max
         seekBar.value = value.isNaN ? 0 : value
-        timeIn.text = String(format: "%02d:%02d", Int(min) / 60 , Int(min) % 60)
-        timeOut.text = String(format: "%02d:%02d", Int(max) / 60 , Int(max) % 60)
+        timeIn.text = String(format: "%02d:%02d", Int(min.isNaN ? 0 : min) / 60 , Int(min.isNaN ? 0 : min) % 60)
+        timeOut.text = String(format: "%02d:%02d", Int(max.isNaN ? 0 : max) / 60 , Int(max.isNaN ? 0 : max) % 60)
     }
 
     func sessionEnd() {
@@ -185,7 +189,8 @@ extension DetailViewController: DetailViewModelDelegate {
 
 extension DetailViewController: ThumbProtocol {
     func selectedThumNail(model: ThumbNailModel) {
-        showIndicator(show: true)
+        setViewObjects(model: model)
         viewModel?.playSelectedVideo(model: model, playerView: playerView)
+        showIndicator(show: true)
     }
 }

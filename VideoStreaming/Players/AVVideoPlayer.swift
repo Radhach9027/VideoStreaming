@@ -64,6 +64,7 @@ class AVvideoPlayer: NSObject {
         player.pause()
         observer?.invalidate()
         avPlayer = nil
+        avPlayerLayer = nil
     }
     
     func pauseStreaming() {
@@ -91,8 +92,8 @@ class AVvideoPlayer: NSObject {
             guard let currentItem = player.currentItem else {
                 return
             }
-            let currentTime = Int(CMTimeGetSeconds(currentItem.currentTime()))
-            let duration = Int(CMTimeGetSeconds(currentItem.duration))
+            let currentTime = CMTimeGetSeconds(currentItem.currentTime())
+            let duration = CMTimeGetSeconds(currentItem.duration)
             let slider = CMTimeGetSeconds(currentItem.currentTime());
             self?.delegate?.seekBarValue(min: Float(currentTime), max: Float(duration), value: Float(slider))
         })

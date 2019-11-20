@@ -12,8 +12,8 @@
             <objects>
                 <viewController storyboardIdentifier="ThumbNailController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yKd-BN-e3U" customClass="ThumbNailController" customModule="VideoStreaming" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="hAQ-KD-kqn"/>
-                        <viewControllerLayoutGuide type="bottom" id="Yal-ns-3Wr"/>
+                        <viewControllerLayoutGuide type="top" id="7Ap-b6-e6l"/>
+                        <viewControllerLayoutGuide type="bottom" id="Sv4-EP-LJB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="B7X-m9-7XD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -43,10 +43,10 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="wda-2F-yuQ" firstAttribute="top" secondItem="hAQ-KD-kqn" secondAttribute="bottom" id="1Y9-cJ-Qow"/>
+                            <constraint firstItem="wda-2F-yuQ" firstAttribute="top" secondItem="7Ap-b6-e6l" secondAttribute="bottom" id="1Y9-cJ-Qow"/>
                             <constraint firstAttribute="trailing" secondItem="wda-2F-yuQ" secondAttribute="trailing" id="5sm-ef-Dzw"/>
                             <constraint firstItem="wda-2F-yuQ" firstAttribute="leading" secondItem="B7X-m9-7XD" secondAttribute="leading" id="X2Z-21-YTe"/>
-                            <constraint firstItem="Yal-ns-3Wr" firstAttribute="top" secondItem="wda-2F-yuQ" secondAttribute="bottom" id="cUN-4l-mjn"/>
+                            <constraint firstItem="Sv4-EP-LJB" firstAttribute="top" secondItem="wda-2F-yuQ" secondAttribute="bottom" id="cUN-4l-mjn"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -59,8 +59,8 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="VideoStreaming" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Xxe-Hm-T5j"/>
-                        <viewControllerLayoutGuide type="bottom" id="s01-bK-OX1"/>
+                        <viewControllerLayoutGuide type="top" id="zjd-jB-EmY"/>
+                        <viewControllerLayoutGuide type="bottom" id="5gk-pl-bpp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -82,14 +82,14 @@
             <objects>
                 <viewController storyboardIdentifier="DetailViewController" title="Detail " useStoryboardIdentifierAsRestorationIdentifier="YES" id="Kp8-eS-1hx" customClass="DetailViewController" customModule="VideoStreaming" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Ha7-A4-XAR"/>
-                        <viewControllerLayoutGuide type="bottom" id="e1x-ye-TAi"/>
+                        <viewControllerLayoutGuide type="top" id="xpS-aT-Kp8"/>
+                        <viewControllerLayoutGuide type="bottom" id="JXQ-z9-P4L"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="x4Y-O6-YEh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Lnv-F6-JXo">
+                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lnv-F6-JXo">
                                 <rect key="frame" x="0.0" y="298" width="414" height="300"/>
                                 <subviews>
                                     <view hidden="YES" alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IqF-tb-mS9">

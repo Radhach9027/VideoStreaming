@@ -1,14 +1,14 @@
 import UIKit
 
 class ThumbNailCell: UICollectionViewCell {
-
     func setValues(data: ThumbNailModel?, selectedObj: ThumbNailModel?) {
         guard let data = data else { return }
         backGround.image = UIImage(named: data.thumbnail)
         selectionImage.image = UIImage(named: (data.id == selectedObj?.id) ? SystemImages.check.rawValue : "")
+        isHighlighted = (data.id == selectedObj?.id) ? true : false
         title.text = data.title
     }
-    
+
     fileprivate let backGround: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -17,7 +17,7 @@ class ThumbNailCell: UICollectionViewCell {
         image.layer.cornerRadius = 10
         return image
     }()
-    
+
     fileprivate let selectionImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +46,7 @@ class ThumbNailCell: UICollectionViewCell {
         backGround.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         backGround.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         backGround.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        
+
         selectionImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
         selectionImage.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
         selectionImage.heightAnchor.constraint(equalToConstant: 18).isActive = true
@@ -60,6 +60,24 @@ class ThumbNailCell: UICollectionViewCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ThumbNailCell {
+    
+    override var isHighlighted: Bool {
+        didSet { bounce(isHighlighted) }
+    }
+
+    func bounce(_ bounce: Bool) {
+        UIView.animate(
+            withDuration: 0.8,
+            delay: 0,
+            usingSpringWithDamping: 0.4,
+            initialSpringVelocity: 0.8,
+            options: [.allowUserInteraction, .beginFromCurrentState],
+            animations: { self.transform = bounce ? CGAffineTransform(scaleX: 0.9, y: 0.9) : .identity },
+            completion: nil)
     }
 }
 

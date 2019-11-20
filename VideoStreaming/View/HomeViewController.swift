@@ -3,7 +3,7 @@ import UIKit
 class HomeViewController: UIViewController {
 
     fileprivate weak var thumNailCollection: ThumbNailView? {
-        let thumbNail = ThumbNailView(size: CGSize(width: 180, height: 180), viewModel: ThumbNailViewModel(), selectedObj: nil)
+        let thumbNail = ThumbNailView(size: CGSize(width: 150, height: 150), viewModel: ThumbNailViewModel(), selectedObj: nil)
         thumbNail.delegate = self
         thumbNail.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(thumbNail)
@@ -22,7 +22,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: ThumbProtocol {
     func selectedThumNail(model: ThumbNailModel) {
-        if let detailsVc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController {
+        if let detailsVc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController, Reachability().checkReachability == true {
             detailsVc.model = model
             self.navigationController?.pushViewController(detailsVc, animated: true)
         }
