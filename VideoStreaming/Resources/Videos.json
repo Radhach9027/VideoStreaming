@@ -1,0 +1,69 @@
+{"Resource": [{
+    "id": 1,
+    "url": "https://content.jwplatform.com/manifests/yp34SRmf.m3u8",
+    "title": "Apple",
+    "thumbnail": "Sample1",
+    "description" : "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org"
+},{
+    "id": 2,
+    "url": "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8",
+    "title": "Elephant Dream",
+    "thumbnail": "Sample2",
+    "description" : "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org"
+
+},{
+    "id": 3,
+    "url": "https://mnmedias.api.telequebec.tv/m3u8/29880.m3u8",
+    "title": "For Bigger Blazes",
+    "thumbnail": "Sample3",
+    "description" : "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org"
+
+},{
+    "id": 4,
+    "url": "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
+    "title": "By Google",
+    "thumbnail": "Sample4",
+    "description" : "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org"
+},{
+    "id": 5,
+    "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    "title": "By Blender Foundation",
+    "thumbnail": "Sample5",
+    "description" : "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org"
+
+},{
+    "id": 6,
+    "url": "https://content.jwplatform.com/manifests/yp34SRmf.m3u8",
+    "title": "Radhachandan",
+    "thumbnail": "Sample6",
+    "description" : "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org"
+
+},{
+    "id": 7,
+    "url": "http://techslides.com/demos/sample-videos/small.mp4",
+    "title": "Android",
+    "thumbnail": "Sample7",
+    "description" : "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org"
+
+},{
+    "id": 8,
+    "url": "http://techslides.com/demos/sample-videos/small.3gp",
+    "title": "React Native",
+    "thumbnail": "Sample8",
+    "description" : "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org"
+
+},{
+    "id": 9,
+    "url": "https://www.radiantmediaplayer.com/media/bbb-360p.mp4",
+    "title": "Java Script",
+    "thumbnail": "Sample9",
+    "description" : "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org"
+
+},{
+    "id": 10,
+    "url": "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8",
+    "title": "Angular.Js",
+    "thumbnail": "Sample10",
+    "description" : "Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore! In the typical cartoon tradition he prepares the nasty rodents a comical revenge.\n\nLicensed under the Creative Commons Attribution license\nhttp://www.bigbuckbunny.org"
+}
+]}

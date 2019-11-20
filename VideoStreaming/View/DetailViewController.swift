@@ -1,0 +1,191 @@
+import UIKit
+
+enum SystemImages: String {
+    case pause
+    case playFull
+    case maximize
+    case minimize
+    case thumbNail
+    case thumbNailSelected
+    case replay
+    case check
+}
+
+class DetailViewController: UIViewController {
+    deinit {
+        print("DetailViewController deallocated")
+    }
+
+    @IBOutlet var playerView: UIView!
+    @IBOutlet var playerControlView: UIView!
+    @IBOutlet var play_pause: UIButton!
+    @IBOutlet var seekBar: UISlider!
+    @IBOutlet var timeIn: UILabel!
+    @IBOutlet var timeOut: UILabel!
+    @IBOutlet var descriptionLabel: UILabel!
+    @IBOutlet var min_maxbutton: UIButton!
+    @IBOutlet var thumbNailsList: UIButton!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var heightContraint: NSLayoutConstraint!
+    var thumbHeightContraint: NSLayoutConstraint?
+    var model: ThumbNailModel?
+    var viewModel: DetailViewModel?
+
+    fileprivate weak var thumNailCollection: ThumbNailView? {
+        let thumbNail = ThumbNailView(direction: .horizontal, size: CGSize(width: 80, height: 80), viewModel: ThumbNailViewModel(), selectedObj: model)
+        thumbNail.delegate = self
+        thumbNail.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(thumbNail)
+        thumbNail.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        thumbNail.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        thumbNail.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        thumbHeightContraint = thumbNail.heightAnchor.constraint(equalToConstant: 0)
+        thumbHeightContraint?.isActive = true
+        return thumbNail
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //******** Default player ********//
+        // _ = AVPlayerController(url: model.url, controller: self)
+        
+        //******** Custom player ********//
+        viewModel = DetailViewModel(model: model, playerView: playerView, delegate: self)
+        _ = thumNailCollection
+        startStreaming()
+
+    }
+
+    private func startStreaming() {
+        guard let thumbNail = model else { return }
+        playButtonTapped(play_pause)
+        descriptionLabel.text = thumbNail.description
+        title = thumbNail.title
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+            navigationController?.isNavigationBarHidden = true
+            playerView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        } else {
+            navigationController?.isNavigationBarHidden = false
+            resizeView(min: true)
+        }
+        viewModel?.resizeFill(playerView: playerView)
+    }
+
+    private func resizeView(min: Bool) {
+        UIView.animate(withDuration: 0.2) {
+            if min {
+                self.heightContraint.constant = 300
+            } else {
+                self.heightContraint.constant = UIScreen.main.bounds.size.height
+            }
+        }
+        view.layoutIfNeeded()
+    }
+
+    private func showIndicator(show: Bool) {
+        DispatchQueue.main.async {
+            if show {
+                self.activityIndicator.startAnimating()
+                self.activityIndicator.isHidden = false
+            } else {
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+            }
+        }
+    }
+}
+
+extension DetailViewController {
+    @IBAction func resizeScreen(_ sender: UIButton) {
+        switch viewModel?.playerResized(state: sender) {
+        case .selected:
+            sender.setImage(UIImage(named: SystemImages.minimize.rawValue), for: .normal)
+            resizeView(min: false)
+        default:
+            sender.setImage(UIImage(named: SystemImages.maximize.rawValue), for: .normal)
+            resizeView(min: true)
+        }
+        viewModel?.resizeFill(playerView: playerView)
+    }
+
+    @IBAction func playButtonTapped(_ sender: UIButton) {
+        showIndicator(show: true)
+        switch viewModel?.playerStates(state: sender) {
+        case .play:
+            sender.setImage(UIImage(named: SystemImages.pause.rawValue), for: .normal)
+            viewModel?.play()
+        case .pause:
+            sender.setImage(UIImage(named: SystemImages.playFull.rawValue), for: .normal)
+            viewModel?.pause()
+        case .replay:
+             sender.setImage(UIImage(named: SystemImages.pause.rawValue), for: .normal)
+             viewModel?.replay()
+             default:
+            break
+        }
+    }
+
+    @IBAction func seekBarDragged(_ sender: UISlider) {
+        showIndicator(show: true)
+        viewModel?.seekPlayerPosition(value: sender.value)
+    }
+
+    @IBAction func playerTapped(_ sender: UITapGestureRecognizer) {
+        playerControlView.isHidden = false
+        thumbNailsList.setImage(UIImage(named: SystemImages.thumbNailSelected.rawValue), for: .normal)
+        thumbNailsTapped(thumbNailsList)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) { [weak self] in
+            self?.playerControlView.isHidden = true
+        }
+    }
+
+    @IBAction func thumbNailsTapped(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            switch self?.viewModel?.playerThumbNailSelection(state: sender) {
+            case .selected:
+                self?.thumbHeightContraint?.constant = 160
+                sender.setImage(UIImage(named: SystemImages.thumbNailSelected.rawValue), for: .normal)
+            case .notSelected:
+                self?.thumbHeightContraint?.constant = 0
+                sender.setImage(UIImage(named: SystemImages.thumbNail.rawValue), for: .normal)
+            default:
+                break
+            }
+        }
+        view.layoutIfNeeded()
+    }
+
+    @IBAction func backButtonTapped(_ sender: Any) {
+        viewModel?.stop()
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+extension DetailViewController: DetailViewModelDelegate {
+    func seekBarValue(min: Float, max: Float, value: Float) {
+        showIndicator(show: false)
+        seekBar.minimumValue = 0
+        seekBar.maximumValue = max.isNaN ? 0 : max
+        seekBar.value = value.isNaN ? 0 : value
+        timeIn.text = String(format: "%02d:%02d", Int(min) / 60 , Int(min) % 60)
+        timeOut.text = String(format: "%02d:%02d", Int(max) / 60 , Int(max) % 60)
+    }
+
+    func sessionEnd() {
+        play_pause.setImage(UIImage(named: SystemImages.replay.rawValue), for: .normal)
+    }
+
+    func thumbNailImage(thumb: UIImage) {}
+}
+
+extension DetailViewController: ThumbProtocol {
+    func selectedThumNail(model: ThumbNailModel) {
+        showIndicator(show: true)
+        viewModel?.playSelectedVideo(model: model, playerView: playerView)
+    }
+}
