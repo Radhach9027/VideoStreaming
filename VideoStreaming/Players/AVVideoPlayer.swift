@@ -4,11 +4,14 @@ protocol AVvideoPlayerProtocol: class {
     func seekBarValue(min: Float, max: Float, value: Float)
     func sessionEnd()
     func thumbNailImage(thumb: UIImage)
+    func isPlaying()
 }
 
 class AVvideoPlayer: NSObject {
     deinit {
         print("VideoPlayer deallocated")
+        observer?.invalidate()
+        NotificationCenter.default.removeObserver(self)
     }
     
     private var myImage: UIImage?
@@ -62,7 +65,6 @@ class AVvideoPlayer: NSObject {
     func stopStreaming() {
         guard let player = avPlayer else { return }
         player.pause()
-        observer?.invalidate()
         avPlayer = nil
         avPlayerLayer = nil
     }
@@ -91,6 +93,9 @@ class AVvideoPlayer: NSObject {
         player.addPeriodicTimeObserver(forInterval: interval, queue: mainQueue, using: { [weak self] _ in
             guard let currentItem = player.currentItem else {
                 return
+            }
+            if player.rate == 1 {
+                self?.delegate?.isPlaying()
             }
             let currentTime = CMTimeGetSeconds(currentItem.currentTime())
             let duration = CMTimeGetSeconds(currentItem.duration)

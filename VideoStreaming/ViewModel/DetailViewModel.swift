@@ -115,10 +115,16 @@ extension DetailViewModel: AVvideoPlayerProtocol {
     func thumbNailImage(thumb: UIImage) {
         delegate?.thumbNailImage(thumb: thumb)
     }
+    
+    func isPlaying() {
+        delegate?.isPlaying()
+    }
+
 }
 
 protocol DetailViewModelDelegate: class {
     func seekBarValue(min: Float, max: Float, value: Float)
     func sessionEnd()
     func thumbNailImage(thumb: UIImage)
+    func isPlaying()
 }
