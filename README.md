@@ -10,11 +10,11 @@ Play, pause, replay ,timeline, thumbnails, full screen, orientation support.
 
 Options:
 
-Reachability check
-Loading indicator while video is about load.
-Able to see selected thumbnail with green check mark and bounce animation.
-Scroll to selected thumbnail.
-Tap on player to dismiss thumbnail.
+1.Reachability check
+2.Loading indicator while video is about load.
+3.Able to see selected thumbnail with green check mark and bounce animation.
+4.Scroll to selected thumbnail.
+5.Tap on player to dismiss thumbnail.
 
 Note: Two player were implemented and below are the details.
 
