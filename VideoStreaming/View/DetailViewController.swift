@@ -48,7 +48,8 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
 
         // ******** Default player ********//
-        // _ = AVPlayerController(url: model.url, controller: self)
+//        guard let url = model?.url else { return }
+//        _ = AVPlayerController(url: url, controller: self)
 
         // ******** Custom player ********//
         viewModel = DetailViewModel(model: model, playerView: playerView, delegate: self)
