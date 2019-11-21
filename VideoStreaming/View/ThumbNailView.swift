@@ -51,8 +51,8 @@ class ThumbNailView: UIView {
     }
     
     func reload() {
-        DispatchQueue.main.async {
-            self.collectionView?.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView?.reloadData()
         }
     }
     
