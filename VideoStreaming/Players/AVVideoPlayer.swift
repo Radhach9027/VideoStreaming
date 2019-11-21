@@ -25,7 +25,7 @@ class AVvideoPlayer: NSObject {
     init?(url: String? = nil, playerView: UIView?, delegate: AVvideoPlayerProtocol? = nil) {
         super.init()
         self.delegate = delegate
-        guard let playerView = playerView, let playerUrl = url else { return nil}
+        guard let playerView = playerView, let playerUrl = url else { return nil }
         playVideo(url: playerUrl, playerView: playerView)
     }
     
@@ -36,9 +36,9 @@ class AVvideoPlayer: NSObject {
         let playerItem = AVPlayerItem(asset: asset, automaticallyLoadedAssetKeys: assetKeys)
         avPlayer = AVPlayer(playerItem: playerItem)
         avPlayerLayer = AVPlayerLayer(player: avPlayer)
-        avPlayerLayer?.frame = playerView.bounds
         avPlayerLayer?.videoGravity = .resizeAspectFill
         playerView.layer.addSublayer(avPlayerLayer!)
+        avPlayerLayer?.frame = playerView.bounds
         playerView.backgroundColor = .black
         addObserversToPlayer(playerItem: playerItem)
     }
@@ -65,8 +65,16 @@ class AVvideoPlayer: NSObject {
     func stopStreaming() {
         guard let player = avPlayer else { return }
         player.pause()
+        removePlayerLayer()
         avPlayer = nil
         avPlayerLayer = nil
+    }
+    
+    func removePlayerLayer() {
+        guard let playerLayer = avPlayerLayer else { return }
+        DispatchQueue.main.async {
+            playerLayer.removeFromSuperlayer()
+        }
     }
     
     func pauseStreaming() {
@@ -99,7 +107,7 @@ class AVvideoPlayer: NSObject {
             }
             let minTime = CMTimeGetSeconds(currentItem.currentTime())
             let duration = CMTimeGetSeconds(currentItem.duration)
-            let value = CMTimeGetSeconds(currentItem.currentTime());
+            let value = CMTimeGetSeconds(currentItem.currentTime())
             self?.delegate?.seekBarValue(min: Float(minTime), max: Float(duration), value: Float(value))
         })
         

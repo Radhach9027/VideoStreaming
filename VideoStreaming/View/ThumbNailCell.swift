@@ -3,7 +3,7 @@ import UIKit
 class ThumbNailCell: UICollectionViewCell {
     func setValues(data: ThumbNailModel?, selectedObj: ThumbNailModel?) {
         guard let data = data else { return }
-        backGround.image = UIImage(named: data.thumbnail)
+        backGround.load(url: URL(string: data.thumbnail)!)
         selectionImage.image = UIImage(named: (data.id == selectedObj?.id) ? SystemImages.check.rawValue : "")
         isHighlighted = (data.id == selectedObj?.id) ? true : false
         title.text = data.title
@@ -89,5 +89,19 @@ extension UIFont {
 
     class func customFont(ofSize size: CGFloat, family: Family) -> UIFont {
         return UIFont(name: family.rawValue, size: size)!
+    }
+}
+
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
     }
 }
