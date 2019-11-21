@@ -8,7 +8,7 @@ protocol DetailViewModelProtocol { // can be used for mocking & testing
     func replay()
     func playerStates(state: UIButton) -> PlayerStates
     func playerThumbNailSelection(state: UIButton) -> Selection
-    func seekPlayerPosition(value: Float)
+    func seekPlayerPosition(value: Float, duration: Float)
     func resizeFill(playerView: UIView)
 }
 
@@ -86,8 +86,8 @@ class DetailViewModel: DetailViewModelProtocol {
         }
     }
     
-    func seekPlayerPosition(value: Float) {
-        player?.seekTime(value: value)
+    func seekPlayerPosition(value: Float, duration: Float) {
+        player?.seekTime(value: value, duration: duration)
     }
     
     func resizeFill(playerView: UIView) {

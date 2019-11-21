@@ -71,7 +71,8 @@ class DetailViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
         if UIDevice.current.orientation.isLandscape {
             showNavigationBar(show: true)
-            playerView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height + 60)
+            playerView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+            playerView.layer.masksToBounds = true
         } else {
             resizeView(min: true)
             showNavigationBar(show: false)
@@ -123,16 +124,17 @@ extension DetailViewController {
     }
 
     @IBAction func playButtonTapped(_ sender: UIButton) {
-        showIndicator(show: true)
         switch viewModel?.playerStates(state: sender) {
         case .play:
             sender.setImage(UIImage(named: SystemImages.pause.rawValue), for: .normal)
+            showIndicator(show: true)
             viewModel?.play()
         case .pause:
             sender.setImage(UIImage(named: SystemImages.playFull.rawValue), for: .normal)
             viewModel?.pause()
         case .replay:
             sender.setImage(UIImage(named: SystemImages.pause.rawValue), for: .normal)
+            showIndicator(show: true)
             viewModel?.replay()
         default:
             break
@@ -141,7 +143,7 @@ extension DetailViewController {
 
     @IBAction func seekBarDragged(_ sender: UISlider) {
         showIndicator(show: true)
-        viewModel?.seekPlayerPosition(value: sender.value)
+        viewModel?.seekPlayerPosition(value: sender.value, duration: sender.maximumValue)
     }
 
     @IBAction func playerTapped(_ sender: UITapGestureRecognizer) {
@@ -192,6 +194,7 @@ extension DetailViewController: DetailViewModelDelegate {
 
     func isPlaying() {
         showIndicator(show: false)
+        play_pause.setImage(UIImage(named: SystemImages.pause.rawValue), for: .normal)
     }
 }
 

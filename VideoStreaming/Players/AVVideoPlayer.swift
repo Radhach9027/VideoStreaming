@@ -81,9 +81,9 @@ class AVvideoPlayer: NSObject {
         player.play()
     }
     
-    func seekTime(value: Float) {
-        guard let player = avPlayer else { return }
-        player.seek(to: CMTimeMakeWithSeconds(Float64(value), preferredTimescale: Int32(NSEC_PER_SEC)))
+    func seekTime(value: Float, duration: Float) {
+        guard let player = avPlayer, isPlaying == true else { return }
+        player.seek(to: CMTimeMakeWithSeconds(Float64(value), preferredTimescale: Int32(duration)), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
     }
     
     private func addObserversToPlayer(playerItem: AVPlayerItem) {
@@ -97,10 +97,10 @@ class AVvideoPlayer: NSObject {
             if player.rate == 1 {
                 self?.delegate?.isPlaying()
             }
-            let currentTime = CMTimeGetSeconds(currentItem.currentTime())
+            let minTime = CMTimeGetSeconds(currentItem.currentTime())
             let duration = CMTimeGetSeconds(currentItem.duration)
-            let slider = CMTimeGetSeconds(currentItem.currentTime());
-            self?.delegate?.seekBarValue(min: Float(currentTime), max: Float(duration), value: Float(slider))
+            let value = CMTimeGetSeconds(currentItem.currentTime());
+            self?.delegate?.seekBarValue(min: Float(minTime), max: Float(duration), value: Float(value))
         })
         
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
