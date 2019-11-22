@@ -199,10 +199,10 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="1yM-y2-wy9"/>
+                                <exclude reference="Nrp-zK-ptp"/>
                                 <exclude reference="6C1-VP-bMh"/>
                                 <exclude reference="GBP-qk-4Xk"/>
                                 <exclude reference="Kde-h4-n6b"/>
-                                <exclude reference="Nrp-zK-ptp"/>
                                 <exclude reference="RLW-Se-52Q"/>
                                 <exclude reference="fRr-cr-GoL"/>
                                 <exclude reference="xQe-zx-gG8"/>
@@ -210,12 +210,12 @@
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
                             <mask key="constraints">
-                                <exclude reference="12T-9U-YDu"/>
                                 <exclude reference="1yM-y2-wy9"/>
+                                <include reference="Nrp-zK-ptp"/>
+                                <exclude reference="12T-9U-YDu"/>
                                 <exclude reference="6C1-VP-bMh"/>
                                 <exclude reference="GBP-qk-4Xk"/>
                                 <include reference="Kde-h4-n6b"/>
-                                <include reference="Nrp-zK-ptp"/>
                                 <exclude reference="RLW-Se-52Q"/>
                                 <include reference="fRr-cr-GoL"/>
                                 <exclude reference="h5B-FG-ZCD"/>

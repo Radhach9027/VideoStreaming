@@ -60,14 +60,19 @@ class DetailViewController: UIViewController {
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        resizeView(min: true)
+        switch viewModel?.playerResized(state: min_maxbutton) {
+        case .notSelected:
+            resizeScreen(min_maxbutton)
+        default:
+            break
+        }
         if UIDevice.current.orientation.isLandscape {
             showNavigationBar(show: true)
             playerView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+            viewModel?.resizeFill(playerView: playerView)
         } else {
             showNavigationBar(show: false)
         }
-        viewModel?.resizeFill(playerView: playerView)
     }
 }
 
