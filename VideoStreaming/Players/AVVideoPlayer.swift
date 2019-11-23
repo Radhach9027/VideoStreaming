@@ -105,8 +105,8 @@ extension AVvideoPlayer {
     }
 }
 
-extension AVvideoPlayer {
-    private func playVideo(url: String, playerView: UIView) {
+private extension AVvideoPlayer {
+       func playVideo(url: String, playerView: UIView) {
         let videoURL = URL(string: url)
         let asset = AVAsset(url: videoURL!)
         let assetKeys = ["playable", "hasProtectedContent"]
@@ -120,7 +120,7 @@ extension AVvideoPlayer {
         addObserversToPlayer(playerItem: playerItem)
     }
     
-    private func addObserversToPlayer(playerItem: AVPlayerItem) {
+        func addObserversToPlayer(playerItem: AVPlayerItem) {
         guard let player = avPlayer else { return }
         let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
         let mainQueue = DispatchQueue.main
@@ -139,13 +139,13 @@ extension AVvideoPlayer {
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
     
-    private func downloadThumNails(url: URL) {
+       func downloadThumNails(url: URL) {
         url.downloadThumbNail(url: url, completionHandler: { [weak self] thumbNail in
             self?.delegate?.thumbNailImage(thumb: thumbNail)
         })
     }
     
-    @objc private func playerDidFinishPlaying(sender: Notification) {
+    @objc func playerDidFinishPlaying(sender: Notification) {
         delegate?.sessionEnd()
     }
 }
