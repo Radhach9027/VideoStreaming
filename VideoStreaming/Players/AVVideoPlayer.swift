@@ -10,6 +10,7 @@ protocol AVvideoPlayerProtocol: class {
 enum Gravity {
     case resize
     case fill
+    case aspectFit
     
     fileprivate func getGravity(gravity: Gravity) -> AVLayerVideoGravity {
         switch gravity {
@@ -17,6 +18,8 @@ enum Gravity {
             return .resize
         case .fill:
             return .resizeAspectFill
+        case .aspectFit:
+            return .resizeAspect
         }
     }
 }
