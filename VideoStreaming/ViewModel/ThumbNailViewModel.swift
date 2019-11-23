@@ -14,17 +14,16 @@ class ThumbNailViewModel {
         guard let list = fetchJsonModel(filename: "Videos") else { return nil }
         return list
     }
-    
-    lazy var index:(ThumbNailModel?)->IndexPath? = { index in
-        guard let data = self.data, let index = index else { return IndexPath(item: 0, section: 0)}
+
+    lazy var index: (ThumbNailModel?) -> IndexPath? = { index in
+        guard let data = self.data, let index = index else { return IndexPath(item: 0, section: 0) }
         let selectiveIndex = self.data?.firstIndex(where: { $0.id == index.id })
         return IndexPath(item: selectiveIndex!, section: 0)
     }
-
 }
 
-extension ThumbNailViewModel {
-    private func fetchJsonModel(filename fileName: String) -> [ThumbNailModel]? {
+private extension ThumbNailViewModel {
+    func fetchJsonModel(filename fileName: String) -> [ThumbNailModel]? {
         if let url = Bundle.main.url(forResource: fileName, withExtension: ".json") {
             do {
                 let data = try Data(contentsOf: url)

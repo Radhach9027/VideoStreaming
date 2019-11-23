@@ -77,19 +77,19 @@ class DetailViewController: UIViewController {
     }
 }
 
-extension DetailViewController {
-    private func startStreaming() {
+private extension DetailViewController {
+    func startStreaming() {
         setViewObjects(model: model)
         playButtonTapped(play_pause)
     }
 
-    private func setViewObjects(model: ThumbNailModel?) {
+    func setViewObjects(model: ThumbNailModel?) {
         guard let thumbNail = model else { return }
         descriptionLabel.text = thumbNail.description
         title = thumbNail.title
     }
 
-    private func resizeView(min: Bool) {
+    func resizeView(min: Bool) {
         UIView.animate(withDuration: 0.2) {
             if min {
                 self.heightContraint.constant = 300
@@ -100,7 +100,7 @@ extension DetailViewController {
         view.layoutIfNeeded()
     }
 
-    private func showIndicator(show: Bool) {
+    func showIndicator(show: Bool) {
         DispatchQueue.main.async { [weak self] in
             if show {
                 self?.activityIndicator.isHidden = false
@@ -112,7 +112,7 @@ extension DetailViewController {
         }
     }
 
-    private func showNavigationBar(show: Bool) {
+    func showNavigationBar(show: Bool) {
         navigationController?.isNavigationBarHidden = UIDevice.current.orientation.isLandscape ? true : show
     }
 }

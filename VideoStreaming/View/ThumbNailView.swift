@@ -11,12 +11,12 @@ class ThumbNailView: UIView {
     private var viewModel: ThumbNailViewModel?
     private var selectedObj: ThumbNailModel?
     private var collectionView: UICollectionView?
-    
-     @available(*, unavailable)
-     required init?(coder aDecoder: NSCoder) {
-         fatalError("NSCoding not supported")
-     }
-    
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("NSCoding not supported")
+    }
+
     init(direction: UICollectionView.ScrollDirection = .vertical, size: CGSize = CGSize(width: 150, height: 150), viewModel: ThumbNailViewModel?, selectedObj: ThumbNailModel?) {
         self.direction = direction
         self.size = size
@@ -25,9 +25,10 @@ class ThumbNailView: UIView {
         super.init(frame: CGRect.zero)
         addCollectionView()
     }
+}
 
-    
-    private func addCollectionView() {
+private extension ThumbNailView {
+    func addCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = direction
         layout.minimumLineSpacing = 10
@@ -41,24 +42,23 @@ class ThumbNailView: UIView {
         collectionView?.backgroundColor = .clear
         collectionView?.showsVerticalScrollIndicator = false
         collectionView?.showsHorizontalScrollIndicator = false
-        self.addSubview(collectionView!)
+        addSubview(collectionView!)
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        collectionView?.topAnchor.constraint(equalToSystemSpacingBelow: self.topAnchor, multiplier: 1).isActive = true
-        collectionView?.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        collectionView?.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        collectionView?.bottomAnchor.constraint(equalToSystemSpacingBelow: self.bottomAnchor, multiplier: 1).isActive = true
-
+        collectionView?.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 1).isActive = true
+        collectionView?.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        collectionView?.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        collectionView?.bottomAnchor.constraint(equalToSystemSpacingBelow: bottomAnchor, multiplier: 1).isActive = true
     }
-    
+
     func reload() {
         DispatchQueue.main.async { [weak self] in
             self?.collectionView?.reloadData()
         }
     }
-    
+
     func scrollToRespectiveIndex() {
         if let indexPath = viewModel?.index(selectedObj!) {
-            self.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
     }
 }
@@ -71,7 +71,7 @@ extension ThumbNailView: UICollectionViewDelegateFlowLayout, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ThumbNailCell
         if let modelObj = viewModel?.data?[indexPath.row] {
-        cell.setValues(data: modelObj, selectedObj: selectedObj)
+            cell.setValues(data: modelObj, selectedObj: selectedObj)
         }
         return cell
     }

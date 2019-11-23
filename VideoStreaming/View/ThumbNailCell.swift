@@ -64,7 +64,6 @@ class ThumbNailCell: UICollectionViewCell {
 }
 
 extension ThumbNailCell {
-    
     override var isHighlighted: Bool {
         didSet { bounce(isHighlighted) }
     }
