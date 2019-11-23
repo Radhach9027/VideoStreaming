@@ -21,7 +21,7 @@ enum Gravity {
     }
 }
 
-class AVvideoPlayer: NSObject {
+final class AVvideoPlayer: NSObject {
     deinit {
         print("VideoPlayer deallocated")
         observer?.invalidate()
