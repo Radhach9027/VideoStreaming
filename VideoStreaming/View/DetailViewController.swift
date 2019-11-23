@@ -66,6 +66,7 @@ class DetailViewController: UIViewController {
         default:
             break
         }
+
         if UIDevice.current.orientation.isLandscape {
             showNavigationBar(show: true)
             playerView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
