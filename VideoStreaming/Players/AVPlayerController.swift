@@ -6,7 +6,7 @@ class AVPlayerController: NSObject {
         print("moviePlayer  deallocated")
     }
 
-    var moviePlayer: AVPlayerViewController?
+    private var moviePlayer: AVPlayerViewController?
 
     init(url: String, controller: UIViewController) {
         super.init()
