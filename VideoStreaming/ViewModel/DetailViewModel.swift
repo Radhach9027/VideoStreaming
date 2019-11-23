@@ -37,9 +37,7 @@ class DetailViewModel: DetailViewModelProtocol {
     }
 
     func playSelectedVideo(model: ThumbNailModel, playerView: UIView) {
-        player?.stopStreaming()
-        player?.playVideo(url: model.url, playerView: playerView)
-        player?.startStreaming()
+        player?.playSelected(url: model.url, playerView: playerView)
     }
 
     func play() {

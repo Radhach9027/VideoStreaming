@@ -44,20 +44,6 @@ final class AVvideoPlayer: NSObject {
         guard let playerView = playerView, let playerUrl = url else { return nil }
         playVideo(url: playerUrl, playerView: playerView)
     }
-    
-    func playVideo(url: String, playerView: UIView) {
-        let videoURL = URL(string: url)
-        let asset = AVAsset(url: videoURL!)
-        let assetKeys = ["playable", "hasProtectedContent"]
-        let playerItem = AVPlayerItem(asset: asset, automaticallyLoadedAssetKeys: assetKeys)
-        avPlayer = AVPlayer(playerItem: playerItem)
-        avPlayerLayer = AVPlayerLayer(player: avPlayer)
-        avPlayerLayer?.videoGravity = .resize
-        playerView.layer.addSublayer(avPlayerLayer!)
-        avPlayerLayer?.frame = playerView.bounds
-        playerView.backgroundColor = .black
-        addObserversToPlayer(playerItem: playerItem)
-    }
 }
 
 extension AVvideoPlayer {
@@ -107,6 +93,12 @@ extension AVvideoPlayer {
         player.play()
     }
     
+    func playSelected(url: String, playerView: UIView) {
+        stopStreaming()
+        playVideo(url: url, playerView: playerView)
+        startStreaming()
+    }
+    
     func seekTime(value: Float, duration: Float) {
         guard let player = avPlayer, isPlaying == true else { return }
         player.seek(to: CMTimeMakeWithSeconds(Float64(value), preferredTimescale: Int32(duration)), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
@@ -114,6 +106,20 @@ extension AVvideoPlayer {
 }
 
 extension AVvideoPlayer {
+    private func playVideo(url: String, playerView: UIView) {
+        let videoURL = URL(string: url)
+        let asset = AVAsset(url: videoURL!)
+        let assetKeys = ["playable", "hasProtectedContent"]
+        let playerItem = AVPlayerItem(asset: asset, automaticallyLoadedAssetKeys: assetKeys)
+        avPlayer = AVPlayer(playerItem: playerItem)
+        avPlayerLayer = AVPlayerLayer(player: avPlayer)
+        avPlayerLayer?.videoGravity = .resize
+        playerView.layer.addSublayer(avPlayerLayer!)
+        avPlayerLayer?.frame = playerView.bounds
+        playerView.backgroundColor = .black
+        addObserversToPlayer(playerItem: playerItem)
+    }
+    
     private func addObserversToPlayer(playerItem: AVPlayerItem) {
         guard let player = avPlayer else { return }
         let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
