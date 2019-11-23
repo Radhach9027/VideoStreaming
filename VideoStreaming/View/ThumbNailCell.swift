@@ -9,7 +9,7 @@ class ThumbNailCell: UICollectionViewCell {
         title.text = data.title
     }
 
-    fileprivate let backGround: UIImageView = {
+    fileprivate lazy var backGround: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFill
@@ -18,14 +18,14 @@ class ThumbNailCell: UICollectionViewCell {
         return image
     }()
 
-    fileprivate let selectionImage: UIImageView = {
+    fileprivate lazy var selectionImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFill
         return image
     }()
 
-    fileprivate let title: UILabel = {
+    fileprivate lazy var title: UILabel = {
         let label = UILabel()
         label.font = UIFont.customFont(ofSize: 14, family: .medium)
         label.backgroundColor = .black
