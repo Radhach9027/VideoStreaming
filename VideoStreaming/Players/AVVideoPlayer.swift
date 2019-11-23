@@ -127,8 +127,7 @@ extension AVvideoPlayer {
             }
             let minTime = CMTimeGetSeconds(currentItem.currentTime())
             let duration = CMTimeGetSeconds(currentItem.duration)
-            let value = CMTimeGetSeconds(currentItem.currentTime())
-            self?.delegate?.seekBarValue(min: Float(minTime), max: Float(duration), value: Float(value))
+            self?.delegate?.seekBarValue(min: Float(minTime), max: Float(duration), value: Float(minTime))
         })
         
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
