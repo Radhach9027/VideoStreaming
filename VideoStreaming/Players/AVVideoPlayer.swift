@@ -7,6 +7,20 @@ protocol AVvideoPlayerProtocol: class {
     func isPlaying()
 }
 
+enum Gravity {
+    case resize
+    case fill
+    
+    fileprivate func getGravity(gravity: Gravity) -> AVLayerVideoGravity {
+        switch gravity {
+        case .resize:
+            return .resize
+        case .fill:
+            return .resizeAspectFill
+        }
+    }
+}
+
 class AVvideoPlayer: NSObject {
     deinit {
         print("VideoPlayer deallocated")
@@ -18,8 +32,7 @@ class AVvideoPlayer: NSObject {
     private var avPlayer: AVPlayer?
     private var avPlayerLayer: AVPlayerLayer?
     private var playerItemContext = 0
-    var observer: NSKeyValueObservation?
-    
+    private var observer: NSKeyValueObservation?
     weak var delegate: AVvideoPlayerProtocol?
     
     init?(url: String? = nil, playerView: UIView?, delegate: AVvideoPlayerProtocol? = nil) {
@@ -36,13 +49,15 @@ class AVvideoPlayer: NSObject {
         let playerItem = AVPlayerItem(asset: asset, automaticallyLoadedAssetKeys: assetKeys)
         avPlayer = AVPlayer(playerItem: playerItem)
         avPlayerLayer = AVPlayerLayer(player: avPlayer)
-        avPlayerLayer?.videoGravity = .resizeAspectFill
+        avPlayerLayer?.videoGravity = .resize
         playerView.layer.addSublayer(avPlayerLayer!)
         avPlayerLayer?.frame = playerView.bounds
         playerView.backgroundColor = .black
         addObserversToPlayer(playerItem: playerItem)
     }
-    
+}
+
+extension AVvideoPlayer {
     var isPlaying: Bool {
         if avPlayer?.rate == 0.0 {
             return false
@@ -50,11 +65,11 @@ class AVvideoPlayer: NSObject {
         return true
     }
     
-    func resizeFill(playerView: UIView) {
+    func resizeFill(playerView: UIView, gravity: Gravity) {
         guard let player = avPlayerLayer else { return }
         player.frame = playerView.layer.bounds
-        player.videoGravity = .resizeAspectFill
         playerView.layer.masksToBounds = true
+        player.videoGravity = gravity.getGravity(gravity: gravity)
     }
     
     func startStreaming() {
@@ -93,7 +108,9 @@ class AVvideoPlayer: NSObject {
         guard let player = avPlayer, isPlaying == true else { return }
         player.seek(to: CMTimeMakeWithSeconds(Float64(value), preferredTimescale: Int32(duration)), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
     }
-    
+}
+
+extension AVvideoPlayer {
     private func addObserversToPlayer(playerItem: AVPlayerItem) {
         guard let player = avPlayer else { return }
         let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
@@ -120,7 +137,7 @@ class AVvideoPlayer: NSObject {
         })
     }
     
-    @objc func playerDidFinishPlaying(sender: Notification) {
+    @objc private func playerDidFinishPlaying(sender: Notification) {
         delegate?.sessionEnd()
     }
 }

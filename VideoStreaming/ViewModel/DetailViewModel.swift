@@ -9,7 +9,7 @@ protocol DetailViewModelProtocol { // can be used for mocking & testing
     func playerStates(state: UIButton) -> PlayerStates
     func playerThumbNailSelection(state: UIButton) -> Selection
     func seekPlayerPosition(value: Float, duration: Float)
-    func resizeFill(playerView: UIView)
+    func resizeFill(playerView: UIView, resize: Gravity)
 }
 
 enum PlayerStates {
@@ -41,20 +41,20 @@ class DetailViewModel: DetailViewModelProtocol {
         player?.playVideo(url: model.url, playerView: playerView)
         player?.startStreaming()
     }
-    
+
     func play() {
         player?.startStreaming()
     }
-    
+
     func pause() {
         player?.pauseStreaming()
     }
-    
+
     func stop() {
         player?.stopStreaming()
         player = nil
     }
-    
+
     func replay() {
         player?.replayStreaming()
     }
@@ -77,21 +77,21 @@ class DetailViewModel: DetailViewModelProtocol {
             return .notSelected
         }
     }
-    
-    func playerResized(state: UIButton)-> Selection {
+
+    func playerResized(state: UIButton) -> Selection {
         if (state.imageView?.image?.isEqualToImage(UIImage(named: SystemImages.maximize.rawValue)))! {
             return .selected
         } else {
             return .notSelected
         }
     }
-    
+
     func seekPlayerPosition(value: Float, duration: Float) {
         player?.seekTime(value: value, duration: duration)
     }
-    
-    func resizeFill(playerView: UIView) {
-        player?.resizeFill(playerView: playerView)
+
+    func resizeFill(playerView: UIView, resize: Gravity) {
+        player?.resizeFill(playerView: playerView, gravity: resize)
     }
 }
 
@@ -103,23 +103,21 @@ extension UIImage {
 }
 
 extension DetailViewModel: AVvideoPlayerProtocol {
-    
     func seekBarValue(min: Float, max: Float, value: Float) {
         delegate?.seekBarValue(min: min, max: max, value: value)
     }
-    
+
     func sessionEnd() {
         delegate?.sessionEnd()
     }
-    
+
     func thumbNailImage(thumb: UIImage) {
         delegate?.thumbNailImage(thumb: thumb)
     }
-    
+
     func isPlaying() {
         delegate?.isPlaying()
     }
-
 }
 
 protocol DetailViewModelDelegate: class {
