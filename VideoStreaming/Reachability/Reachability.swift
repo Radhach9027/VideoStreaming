@@ -3,7 +3,13 @@ import SystemConfiguration
 import UIKit
 
 public class Reachability {
-   private class func isConnectedToNetwork() -> Bool {
+    private enum NetworkMessage: String {
+        case noNetwotk = "No Network"
+        case message = "Please check your internet connection"
+        case okMessage = "OK"
+    }
+
+    private class func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
         zeroAddress.sin_family = sa_family_t(AF_INET)
@@ -30,8 +36,8 @@ public class Reachability {
             return true
         }
         guard let rootViewController = UIApplication.shared.windows.first?.rootViewController else { return false }
-        let alertController = UIAlertController(title: "No Network", message: "Please check your internet connection", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        let alertController = UIAlertController(title: NetworkMessage.noNetwotk.rawValue, message: NetworkMessage.message.rawValue, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: NetworkMessage.okMessage.rawValue, style: .default, handler: nil))
         rootViewController.present(alertController, animated: true, completion: nil)
         return false
     }

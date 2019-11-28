@@ -5,6 +5,10 @@ protocol ThumbProtocol: class {
 }
 
 class ThumbNailView: UIView {
+    enum ThumbNailIdentifier: String {
+        case ThumbNail
+    }
+
     deinit {
         print("ThumbNailView deallocated")
     }
@@ -40,7 +44,7 @@ private extension ThumbNailView {
         layout.itemSize = size
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView?.register(ThumbNailCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView?.register(ThumbNailCell.self, forCellWithReuseIdentifier: ThumbNailIdentifier.ThumbNail.rawValue)
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.backgroundColor = .clear
@@ -73,7 +77,7 @@ extension ThumbNailView: UICollectionViewDelegateFlowLayout, UICollectionViewDat
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ThumbNailCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ThumbNailIdentifier.ThumbNail.rawValue, for: indexPath) as! ThumbNailCell
         if let modelObj = viewModel?.data?[indexPath.row] {
             cell.setValues(data: modelObj, selectedObj: selectedObj)
         }

@@ -1,17 +1,23 @@
 import UIKit
 
 class ThumbNailViewModel {
+    private enum FileSource: String {
+        case fileName = "Videos"
+        case jsonKey = "Resource"
+        case fileType = ".json"
+    }
+
     var numberOfSections: Int {
         return 1
     }
 
     var numberItemsSections: Int {
-        guard let list = fetchJsonModel(filename: "Videos") else { return 0 }
+        guard let list = fetchJsonModel(filename: FileSource.fileName.rawValue) else { return 0 }
         return list.count
     }
 
     var data: [ThumbNailModel]? {
-        guard let list = fetchJsonModel(filename: "Videos") else { return nil }
+        guard let list = fetchJsonModel(filename: FileSource.fileName.rawValue) else { return nil }
         return list
     }
 
@@ -24,10 +30,10 @@ class ThumbNailViewModel {
 
 private extension ThumbNailViewModel {
     func fetchJsonModel(filename fileName: String) -> [ThumbNailModel]? {
-        if let url = Bundle.main.url(forResource: fileName, withExtension: ".json") {
+        if let url = Bundle.main.url(forResource: fileName, withExtension: FileSource.fileType.rawValue) {
             do {
                 let data = try Data(contentsOf: url)
-                guard let videosList = data.dataAtKeyPath("Resource") else { return nil }
+                guard let videosList = data.dataAtKeyPath(FileSource.jsonKey.rawValue) else { return nil }
                 let jsonData = try JSONDecoder().decode([ThumbNailModel].self, from: videosList)
                 return jsonData
             } catch {
