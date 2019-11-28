@@ -5,6 +5,10 @@ protocol ThumbProtocol: class {
 }
 
 class ThumbNailView: UIView {
+    deinit {
+        print("ThumbNailView deallocated")
+    }
+
     weak var delegate: ThumbProtocol?
     private var direction: UICollectionView.ScrollDirection
     private var size: CGSize

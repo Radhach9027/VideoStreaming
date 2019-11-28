@@ -1,6 +1,10 @@
 import UIKit
 
 class ThumbNailCell: UICollectionViewCell {
+    deinit {
+        print("ThumbNailCell deallocated")
+    }
+
     func setValues(data: ThumbNailModel?, selectedObj: ThumbNailModel?) {
         guard let data = data else { return }
         backGround.load(url: URL(string: data.thumbnail)!)

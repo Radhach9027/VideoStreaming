@@ -3,7 +3,7 @@ import UIKit
 
 class AVPlayerController: NSObject {
     deinit {
-        print("moviePlayer  deallocated")
+        print("AVPlayerController  deallocated")
     }
 
     private var moviePlayer: AVPlayerViewController?

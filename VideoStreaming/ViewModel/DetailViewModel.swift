@@ -9,7 +9,7 @@ protocol DetailViewModelProtocol { // can be used for mocking & testing
     func playerStates(state: UIButton) -> PlayerStates
     func playerThumbNailSelection(state: UIButton) -> Selection
     func seekPlayerPosition(value: Float, duration: Float)
-    func resizeFill(playerView: UIView, resize: Gravity)
+    func resize(playerView: UIView, resize: Gravity)
 }
 
 enum PlayerStates {
@@ -88,8 +88,8 @@ class DetailViewModel: DetailViewModelProtocol {
         player?.seekTime(value: value, duration: duration)
     }
 
-    func resizeFill(playerView: UIView, resize: Gravity) {
-        player?.resizeFill(playerView: playerView, gravity: resize)
+    func resize(playerView: UIView, resize: Gravity) {
+        player?.resize(playerView: playerView, gravity: resize)
     }
 }
 

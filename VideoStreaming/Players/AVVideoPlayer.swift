@@ -26,15 +26,13 @@ enum Gravity {
 
 final class AVvideoPlayer: NSObject {
     deinit {
-        print("VideoPlayer deallocated")
+        print("AVvideoPlayer deallocated")
         observer?.invalidate()
         NotificationCenter.default.removeObserver(self)
     }
     
-    private var myImage: UIImage?
     private var avPlayer: AVPlayer?
     private var avPlayerLayer: AVPlayerLayer?
-    private var playerItemContext = 0
     private var observer: NSKeyValueObservation?
     weak var delegate: AVvideoPlayerProtocol?
     
@@ -54,7 +52,7 @@ extension AVvideoPlayer {
         return true
     }
     
-    func resizeFill(playerView: UIView, gravity: Gravity) {
+    func resize(playerView: UIView, gravity: Gravity) {
         guard let player = avPlayerLayer else { return }
         player.frame = playerView.layer.bounds
         playerView.layer.masksToBounds = true
@@ -106,7 +104,7 @@ extension AVvideoPlayer {
 }
 
 private extension AVvideoPlayer {
-       func playVideo(url: String, playerView: UIView) {
+    func playVideo(url: String, playerView: UIView) {
         let videoURL = URL(string: url)
         let asset = AVAsset(url: videoURL!)
         let assetKeys = ["playable", "hasProtectedContent"]
@@ -120,7 +118,7 @@ private extension AVvideoPlayer {
         addObserversToPlayer(playerItem: playerItem)
     }
     
-        func addObserversToPlayer(playerItem: AVPlayerItem) {
+    func addObserversToPlayer(playerItem: AVPlayerItem) {
         guard let player = avPlayer else { return }
         let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
         let mainQueue = DispatchQueue.main
@@ -139,7 +137,7 @@ private extension AVvideoPlayer {
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying(sender:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
     
-       func downloadThumNails(url: URL) {
+    func downloadThumNails(url: URL) {
         url.downloadThumbNail(url: url, completionHandler: { [weak self] thumbNail in
             self?.delegate?.thumbNailImage(thumb: thumbNail)
         })

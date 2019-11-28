@@ -70,7 +70,7 @@ class DetailViewController: UIViewController {
         if UIDevice.current.orientation.isLandscape {
             showNavigationBar(show: true)
             playerView.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-            viewModel?.resizeFill(playerView: playerView, resize: .resize)
+            viewModel?.resize(playerView: playerView, resize: .resize)
         } else {
             showNavigationBar(show: false)
         }
@@ -124,12 +124,12 @@ extension DetailViewController {
             showNavigationBar(show: true)
             sender.setImage(UIImage(named: SystemImages.minimize.rawValue), for: .normal)
             resizeView(min: false)
-            viewModel?.resizeFill(playerView: playerView, resize: .fill)
+            viewModel?.resize(playerView: playerView, resize: .fill)
         default:
             showNavigationBar(show: false)
             sender.setImage(UIImage(named: SystemImages.maximize.rawValue), for: .normal)
             resizeView(min: true)
-            viewModel?.resizeFill(playerView: playerView, resize: .resize)
+            viewModel?.resize(playerView: playerView, resize: .resize)
         }
     }
 
