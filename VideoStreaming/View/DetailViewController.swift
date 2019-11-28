@@ -30,7 +30,7 @@ class DetailViewController: UIViewController {
     var thumbHeightContraint: NSLayoutConstraint?
 
     var model: ThumbNailModel?
-    var viewModel: DetailViewModel?
+    var viewModel: DetailViewModelProtocol?
 
     fileprivate weak var thumNailCollection: ThumbNailView? {
         let thumbNail = ThumbNailView(direction: .horizontal, size: CGSize(width: 80, height: 80), viewModel: ThumbNailViewModel(), selectedObj: model)
