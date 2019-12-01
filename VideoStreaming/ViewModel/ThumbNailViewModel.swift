@@ -21,7 +21,7 @@ class ThumbNailViewModel {
         return list
     }
 
-    lazy var index: (ThumbNailModel?) -> IndexPath? = { index in
+    lazy var index: (ThumbNailModel?) -> IndexPath? = { index in // use it when required.
         guard let data = self.data, let index = index else { return IndexPath(item: 0, section: 0) }
         let selectiveIndex = self.data?.firstIndex(where: { $0.id == index.id })
         return IndexPath(item: selectiveIndex!, section: 0)

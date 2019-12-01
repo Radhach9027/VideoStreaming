@@ -64,9 +64,9 @@ private extension ThumbNailView {
         }
     }
 
-    func scrollToRespectiveIndex() {
-        if let indexPath = viewModel?.index(selectedObj!) {
-            collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    func scrollToRespectiveIndex(indexPath: IndexPath) {
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
     }
 }
@@ -88,7 +88,7 @@ extension ThumbNailView: UICollectionViewDelegateFlowLayout, UICollectionViewDat
         if let obj = viewModel?.data?[indexPath.item] {
             selectedObj = obj
             reload()
-            scrollToRespectiveIndex()
+            scrollToRespectiveIndex(indexPath: indexPath)
             delegate?.selectedThumNail(model: obj)
         }
     }
